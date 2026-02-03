@@ -48,6 +48,17 @@ builder.Services.AddScoped<CriarTransacaoUseCase>();
 builder.Services.AddScoped<RelatorioTransacaoPorPessoaUseCase>();
 builder.Services.AddScoped<RelatorioTransacaoPorCategoriaUseCase>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .AllowAnyOrigin()   // libera qualquer origem (dev)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -63,6 +74,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
+app.UseCors("FrontendPolicy");
 
 app.MapControllers();
 
