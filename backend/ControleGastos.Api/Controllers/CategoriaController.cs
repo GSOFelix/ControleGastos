@@ -45,7 +45,7 @@ namespace ControleGastos.Api.Controllers
             return Ok(categoria);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id,CancellationToken token)
         {
             await _service.DeleteCategoria(id,token);
